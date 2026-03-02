@@ -1,79 +1,275 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <title>Mood Companion</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<div id="app">
+<!-- Global animated background (all screens) -->
+<div id="bgFX" aria-hidden="true"></div>
 
-  <!-- NAME SCREEN -->
-  <div id="nameScreen">
-    <h1>Welcome 🌸</h1>
-    <h2>What's your name?</h2>
-    <input id="nameInput" placeholder="Enter your name">
-    <button onclick="saveName()">Start</button>
-  </div>
+<div id="stage">
 
-  <!-- MOOD SCREEN -->
-  <div id="moodScreen" class="hidden">
-    <h2 id="greeting"></h2>
+  <!-- 1) NAME -->
+  <section id="screenName" class="screen show">
+    <div class="centerCard plain">
+      <h1 class="title">Mood Companion</h1>
+      <p class="sub">Enter your name to begin.</p>
 
-    <div class="mood-row">
-      <button onclick="chooseMood('Low')">😞 Low<br><small>Feeling sad</small></button>
-      <button onclick="chooseMood('Neutral')">😐 Just Okay<br><small>Calm</small></button>
-      <button onclick="chooseMood('Good')">🙂 Good<br><small>Feeling nice</small></button>
-      <button onclick="chooseMood('Great')">😄 Happy<br><small>Feeling amazing</small></button>
+      <label class="label">Your name</label>
+      <input id="nameInput" class="input" placeholder="Prashansa" />
+      <button class="btn primary" id="btnStart">Continue</button>
+
+      <p class="tiny">Saved on this device only.</p>
     </div>
-  </div>
+  </section>
 
-  <!-- OPTIONS -->
-  <div id="optionsScreen" class="hidden">
-    <h3>Choose something:</h3>
-    <button onclick="showSection('game')">⭐ Catch the Star</button>
-    <button onclick="showSection('mathGame')">🧠 Multiplication</button>
-    <button onclick="showSection('quote')">✨ Surprise Quote</button>
-    <button onclick="showSection('breathing')">🌬 Breathing</button>
-    <button onclick="showAnalytics()">📊 Insights</button>
-  </div>
+  <!-- 2) BIG WELCOME CELEBRATION -->
+  <section id="screenWelcome" class="screen">
+    <div class="partyFX" aria-hidden="true">
+      <div class="stringLights"></div>
+    </div>
 
-  <!-- STAR GAME -->
-  <div id="game" class="hidden">
-    <h3>Click the ⭐</h3>
-    <div id="star">⭐</div>
-    <p>Score: <span id="score">0</span></p>
-    <button onclick="back()">Back</button>
-  </div>
+    <div class="welcomeWrap">
+      <div class="welcomeCard">
+        <div class="badge">🎉 Welcome</div>
+        <h1 class="welcomeTitle" id="welcomeTitle">Welcome!</h1>
+        <p class="welcomeSub">to <b>Mood Companion</b></p>
+        <p class="welcomeSub2">created by <b>Prashansa</b></p>
 
-  <!-- MATH GAME -->
-  <div id="mathGame" class="hidden">
-    <h3 id="question"></h3>
-    <div id="answers"></div>
-    <p>Score: <span id="mathScore">0</span></p>
-    <button onclick="back()">Back</button>
-  </div>
+        <div class="optionRow">
+          <button class="btn primary big" id="btnGoMoods">Start Mood Check-in</button>
+          <button class="btn ghost big" id="btnLessFx">Less effects</button>
+        </div>
+      </div>
+    </div>
+  </section>
 
-  <!-- QUOTE -->
-  <div id="quote" class="hidden">
-    <h1 id="quoteText"></h1>
-    <button onclick="back()">Back</button>
-  </div>
+  <!-- 3) MOOD PICK (BIG EMOJIS) -->
+  <section id="screenMood" class="screen">
+    <div class="topBar">
+      <div class="topLeft">
+        <div class="badge" id="greetingBadge">Hi!</div>
+        <div class="topTitle">Pick your mood</div>
+      </div>
+      <div class="topRight">
+        <button class="btn ghost" id="btnRecords">Records</button>
+      </div>
+    </div>
 
-  <!-- BREATHING -->
-  <div id="breathing" class="hidden">
-    <h2 id="breathText">Press Start</h2>
-    <div id="circle"></div>
-    <button onclick="startBreathing()">Start</button>
-    <button onclick="back()">Back</button>
-  </div>
+    <div class="moodGrid" id="moodGrid"></div>
+    <div class="hint">Tap an emoji. No text. No stress.</div>
+  </section>
 
-  <!-- ANALYTICS -->
-  <div id="analytics" class="hidden">
-    <h2>Mood Insights 📊</h2>
-    <div id="stats"></div>
-    <button onclick="back()">Back</button>
-  </div>
+  <!-- 4) MOOD TAKEOVER + DANCING MASCOTS -->
+  <section id="screenTakeover" class="screen">
+    <div class="takeoverBG"></div>
+
+    <div class="takeoverHero" id="takeoverHero">🙂</div>
+
+    <div class="mascotRow">
+      <!-- Original mascots (not copyrighted characters) -->
+      <div class="mascot dance" id="mascotCat" title="Robot Cat (original)">
+        <svg viewBox="0 0 120 120" width="120" height="120" aria-hidden="true">
+          <circle cx="60" cy="64" r="38" fill="rgba(255,255,255,0.85)" stroke="rgba(255,255,255,0.12)" stroke-width="3"/>
+          <circle cx="46" cy="58" r="6" fill="rgba(10,14,25,0.9)"/>
+          <circle cx="74" cy="58" r="6" fill="rgba(10,14,25,0.9)"/>
+          <path d="M50 74 Q60 82 70 74" fill="none" stroke="rgba(10,14,25,0.85)" stroke-width="4" stroke-linecap="round"/>
+          <path d="M28 46 L42 34 L46 50" fill="rgba(255,255,255,0.85)" stroke="rgba(255,255,255,0.12)" stroke-width="3" stroke-linejoin="round"/>
+          <path d="M92 46 L78 34 L74 50" fill="rgba(255,255,255,0.85)" stroke="rgba(255,255,255,0.12)" stroke-width="3" stroke-linejoin="round"/>
+          <circle cx="60" cy="88" r="6" fill="rgba(236,72,153,0.9)"/>
+        </svg>
+        <div class="mascotLabel">Robot Cat</div>
+      </div>
+
+      <div class="mascot dance2" id="mascotMouse" title="Cartoon Mouse (original)">
+        <svg viewBox="0 0 140 120" width="130" height="120" aria-hidden="true">
+          <circle cx="70" cy="62" r="34" fill="rgba(255,255,255,0.85)" stroke="rgba(255,255,255,0.12)" stroke-width="3"/>
+          <circle cx="36" cy="40" r="20" fill="rgba(255,255,255,0.85)" stroke="rgba(255,255,255,0.12)" stroke-width="3"/>
+          <circle cx="104" cy="40" r="20" fill="rgba(255,255,255,0.85)" stroke="rgba(255,255,255,0.12)" stroke-width="3"/>
+          <circle cx="58" cy="58" r="6" fill="rgba(10,14,25,0.9)"/>
+          <circle cx="82" cy="58" r="6" fill="rgba(10,14,25,0.9)"/>
+          <path d="M58 76 Q70 86 82 76" fill="none" stroke="rgba(10,14,25,0.85)" stroke-width="4" stroke-linecap="round"/>
+          <circle cx="70" cy="70" r="5" fill="rgba(59,130,246,0.9)"/>
+        </svg>
+        <div class="mascotLabel">Cartoon Mouse</div>
+      </div>
+    </div>
+
+    <div class="takeoverCard">
+      <div class="badge" id="takeoverBadge">Mood saved ✅</div>
+      <h2 class="takeoverTitle" id="takeoverTitle">Nice.</h2>
+      <p class="takeoverSub" id="takeoverSub">What do you want to do now?</p>
+
+      <div class="optionRow">
+        <button class="btn primary" id="btnToOptions">Choose an activity</button>
+        <button class="btn ghost" id="btnChangeMood">Change mood</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5) OPTIONS -->
+  <section id="screenOptions" class="screen">
+    <div class="topBar">
+      <div class="topLeft">
+        <div class="badge" id="optionsMoodBadge">Mood: 🙂</div>
+        <div class="topTitle">Choose something fun</div>
+      </div>
+      <div class="topRight">
+        <button class="btn ghost" id="btnOptionsRecords">Records</button>
+        <button class="btn ghost" id="btnOptionsMood">Change mood</button>
+      </div>
+    </div>
+
+    <div class="optionsGrid">
+      <button class="bigTile" data-action="star">
+        <div class="tileEmoji">⭐</div>
+        <div class="tileText">Catch the Star</div>
+      </button>
+
+      <button class="bigTile" data-action="math">
+        <div class="tileEmoji">🧠</div>
+        <div class="tileText">Quick Math</div>
+      </button>
+
+      <button class="bigTile" data-action="quote">
+        <div class="tileEmoji">✨</div>
+        <div class="tileText">Surprise Quote</div>
+      </button>
+
+      <button class="bigTile" data-action="breath">
+        <div class="tileEmoji">🌬️</div>
+        <div class="tileText">Breathing 5–3–5</div>
+      </button>
+    </div>
+
+    <div class="aliveCenter" id="aliveCenter">
+      <div class="aliveBubble" id="aliveBubble">Pick one!</div>
+      <div class="aliveEmoji" id="aliveEmoji">🐾</div>
+    </div>
+  </section>
+
+  <!-- 6) STAR GAME -->
+  <section id="screenStar" class="screen">
+    <div class="topBar">
+      <div class="topLeft">
+        <div class="badge">Game</div>
+        <div class="topTitle">⭐ Catch the Star</div>
+      </div>
+      <div class="topRight">
+        <button class="btn ghost" id="btnBackFromStar">Back</button>
+      </div>
+    </div>
+
+    <div class="playArea" id="starArea">
+      <div id="star" class="tapStar">⭐</div>
+      <div class="gameMascot bounce" id="starMascot">🐱</div>
+      <div class="gameMascot2 floaty" id="starMascot2">🦊</div>
+    </div>
+    <div class="scoreLine">Score: <span id="score">0</span></div>
+  </section>
+
+  <!-- 7) MATH GAME -->
+  <section id="screenMath" class="screen">
+    <div class="topBar">
+      <div class="topLeft">
+        <div class="badge">Game</div>
+        <div class="topTitle">🧠 Quick Math</div>
+      </div>
+      <div class="topRight">
+        <button class="btn ghost" id="btnBackFromMath">Back</button>
+      </div>
+    </div>
+
+    <div class="mathCard">
+      <div class="mathToolbar">
+        <button class="btn ghost small" data-op="mix">Mix</button>
+        <button class="btn ghost small" data-op="+">+</button>
+        <button class="btn ghost small" data-op="-">−</button>
+        <button class="btn ghost small" data-op="×">×</button>
+        <button class="btn ghost small" data-op="÷">÷</button>
+      </div>
+
+      <div class="mathQuestion" id="question">Press start…</div>
+      <div class="mathHint">Answers stay still for <b>20 seconds</b>, then move.</div>
+      <div class="mathArea" id="answers"></div>
+
+      <div class="scoreLine">Score: <span id="mathScore">0</span></div>
+      <div class="optionRow">
+        <button class="btn primary" id="btnMathStart">Start</button>
+        <button class="btn ghost" id="btnMathReset">Reset</button>
+      </div>
+    </div>
+
+    <div class="gameMascot bounce" id="mathMascot">🦉</div>
+    <div class="gameMascot2 floaty" id="mathMascot2">🐼</div>
+  </section>
+
+  <!-- 8) QUOTE -->
+  <section id="screenQuote" class="screen">
+    <div class="topBar">
+      <div class="topLeft">
+        <div class="badge">Quote</div>
+        <div class="topTitle">✨ Surprise</div>
+      </div>
+      <div class="topRight">
+        <button class="btn ghost" id="btnBackFromQuote">Back</button>
+      </div>
+    </div>
+
+    <div class="quoteCard" id="quoteText"></div>
+    <div class="gameMascot floaty" id="quoteMascot">🧸</div>
+    <div class="gameMascot2 bounce" id="quoteMascot2">🐰</div>
+  </section>
+
+  <!-- 9) BREATHING -->
+  <section id="screenBreath" class="screen">
+    <div class="topBar">
+      <div class="topLeft">
+        <div class="badge">Calm</div>
+        <div class="topTitle">🌬️ Breathing 5–3–5</div>
+      </div>
+      <div class="topRight">
+        <button class="btn ghost" id="btnBackFromBreath">Back</button>
+      </div>
+    </div>
+
+    <div class="breathWrap">
+      <div class="breathText" id="breathText">Press start and follow the circle.</div>
+      <div id="circle"></div>
+
+      <div class="optionRow">
+        <button class="btn primary" id="btnBreathStart">Start</button>
+        <button class="btn ghost" id="btnBreathStop">Stop</button>
+      </div>
+    </div>
+
+    <div class="gameMascot breathe" id="breathMascot">🐼</div>
+    <div class="gameMascot2 floaty" id="breathMascot2">🐢</div>
+  </section>
+
+  <!-- 10) RECORDS -->
+  <section id="screenRecords" class="screen">
+    <div class="topBar">
+      <div class="topLeft">
+        <div class="badge">Records</div>
+        <div class="topTitle">Your mood history</div>
+      </div>
+      <div class="topRight">
+        <button class="btn ghost" id="btnBackFromRecords">Back</button>
+      </div>
+    </div>
+
+    <div class="recordsCard">
+      <div class="tiny">Saved on this device. Newest first.</div>
+      <div id="recordsList" class="recordsList"></div>
+      <div class="optionRow">
+        <button class="btn ghost" id="btnClearRecords">Clear records</button>
+      </div>
+    </div>
+  </section>
 
 </div>
 
