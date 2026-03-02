@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Mood Companion</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="app">
+
+  <!-- NAME SCREEN -->
+  <div id="nameScreen">
+    <h1>Welcome 🌸</h1>
+    <h2>What's your name?</h2>
+    <input id="nameInput" placeholder="Enter your name">
+    <button onclick="saveName()">Start</button>
+  </div>
+
+  <!-- MOOD SCREEN -->
+  <div id="moodScreen" class="hidden">
+    <h2 id="greeting"></h2>
+
+    <div class="mood-row">
+      <button onclick="chooseMood('Low')">😞 Low<br><small>Feeling sad</small></button>
+      <button onclick="chooseMood('Neutral')">😐 Just Okay<br><small>Calm</small></button>
+      <button onclick="chooseMood('Good')">🙂 Good<br><small>Feeling nice</small></button>
+      <button onclick="chooseMood('Great')">😄 Happy<br><small>Feeling amazing</small></button>
+    </div>
+  </div>
+
+  <!-- OPTIONS -->
+  <div id="optionsScreen" class="hidden">
+    <h3>Choose something:</h3>
+    <button onclick="showSection('game')">⭐ Catch the Star</button>
+    <button onclick="showSection('mathGame')">🧠 Multiplication</button>
+    <button onclick="showSection('quote')">✨ Surprise Quote</button>
+    <button onclick="showSection('breathing')">🌬 Breathing</button>
+    <button onclick="showAnalytics()">📊 Insights</button>
+  </div>
+
+  <!-- STAR GAME -->
+  <div id="game" class="hidden">
+    <h3>Click the ⭐</h3>
+    <div id="star">⭐</div>
+    <p>Score: <span id="score">0</span></p>
+    <button onclick="back()">Back</button>
+  </div>
+
+  <!-- MATH GAME -->
+  <div id="mathGame" class="hidden">
+    <h3 id="question"></h3>
+    <div id="answers"></div>
+    <p>Score: <span id="mathScore">0</span></p>
+    <button onclick="back()">Back</button>
+  </div>
+
+  <!-- QUOTE -->
+  <div id="quote" class="hidden">
+    <h1 id="quoteText"></h1>
+    <button onclick="back()">Back</button>
+  </div>
+
+  <!-- BREATHING -->
+  <div id="breathing" class="hidden">
+    <h2 id="breathText">Press Start</h2>
+    <div id="circle"></div>
+    <button onclick="startBreathing()">Start</button>
+    <button onclick="back()">Back</button>
+  </div>
+
+  <!-- ANALYTICS -->
+  <div id="analytics" class="hidden">
+    <h2>Mood Insights 📊</h2>
+    <div id="stats"></div>
+    <button onclick="back()">Back</button>
+  </div>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

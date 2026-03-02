@@ -1,0 +1,69 @@
+body {
+  font-family: sans-serif;
+  text-align: center;
+  background: #d6e6ff;
+  transition: background 0.5s;
+}
+
+.hidden {
+  display: none;
+}
+
+button {
+  padding: 10px 15px;
+  margin: 10px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+}
+
+#nameScreen h1 { font-size: 48px; }
+#nameScreen h2 { font-size: 32px; }
+
+#nameInput {
+  font-size: 20px;
+  padding: 8px;
+}
+
+.mood-row {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.mood-row button {
+  width: 250px;
+}
+
+#star {
+  font-size: 40px;
+  position: absolute;
+  cursor: pointer;
+}
+
+#answers {
+  position: relative;
+  height: 200px;
+}
+
+.movingBtn {
+  position: absolute;
+  padding: 10px;
+  font-size: 18px;
+}
+
+#circle {
+  width: 100px;
+  height: 100px;
+  background: lightblue;
+  border-radius: 50%;
+  margin: 20px auto;
+  transition: transform 5s ease;
+}
+
+@keyframes fall {
+  to {
+    transform: translateY(110vh);
+    opacity: 0;
+  }
+}
